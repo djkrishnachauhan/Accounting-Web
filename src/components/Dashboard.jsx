@@ -1,8 +1,14 @@
 import VoucherDashboard from "./VoucherDashboard";
+import SaleEntry from "./SaleEntry";
 
-export default function Dashboard({ active }) {
+export default function Dashboard({ active, setActive }) {
+
   if (active === "vouchers") {
-    return <VoucherDashboard />;
+    return <VoucherDashboard onSelect={setActive} />;
+  }
+
+  if (active === "sale") {
+    return <SaleEntry />;
   }
 
   return (
