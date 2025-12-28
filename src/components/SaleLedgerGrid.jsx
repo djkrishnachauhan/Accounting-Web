@@ -11,7 +11,7 @@ export default function SaleLedgerGrid() {
 
   return (
     <table className="w-full border mt-4">
-      <thead className="bg-slate-100">
+      <thead>
         <tr>
           <th className="w-2/5">Ledger</th>
           <th>Rate %</th>
@@ -23,18 +23,23 @@ export default function SaleLedgerGrid() {
           <tr key={i}>
             <td>
               <input
-                className="w-full"
                 value={r.ledger}
-                onChange={(e) => update(i, "ledger", e.target.value)}
+                onChange={(e) =>
+                  update(i, "ledger", e.target.value)
+                }
+                className="w-full border"
               />
             </td>
             <td>
               <input
-                disabled={!r.ledger}
                 type="number"
                 min="0"
+                disabled={!r.ledger}
                 value={r.rate}
-                onChange={(e) => update(i, "rate", e.target.value)}
+                onChange={(e) =>
+                  update(i, "rate", e.target.value)
+                }
+                className="w-full border"
               />
             </td>
             <td />
