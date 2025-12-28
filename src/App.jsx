@@ -23,7 +23,7 @@ export default function App() {
 
         {/* CONTENT */}
         <main className="flex-1 overflow-auto bg-slate-50 p-6">
-          <Dashboard active={active} />
+          <Dashboard active={active} setActive={setActive} />
         </main>
 
       </div>
