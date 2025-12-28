@@ -1,32 +1,22 @@
 export default function VoucherDashboard({ onSale }) {
   return (
-    <div className="max-w-6xl mx-auto">
-      <h2 className="text-xl font-semibold mb-6 text-slate-700">
-        Voucher Dashboard
-      </h2>
-
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-        <VoucherCard title="Journal" />
-        <VoucherCard title="Purchase" />
-        <VoucherCard title="Sale" onClick={onSale} />
-        <VoucherCard title="Receipt" />
-        <VoucherCard title="Payment" />
-      </div>
+    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <Btn text="Journal" />
+      <Btn text="Purchase" />
+      <Btn text="Sale" onClick={onSale} />
+      <Btn text="Receipt" />
+      <Btn text="Payment" />
     </div>
   );
 }
 
-function VoucherCard({ title, onClick }) {
+function Btn({ text, onClick }) {
   return (
     <button
       onClick={onClick}
-      className="h-24 bg-white border border-slate-300 rounded-lg
-      flex items-center justify-center
-      text-lg font-medium text-slate-700
-      hover:border-blue-600 hover:text-blue-600
-      hover:shadow transition"
+      className="border rounded p-6 text-lg hover:bg-gray-100"
     >
-      {title}
+      {text}
     </button>
   );
 }
