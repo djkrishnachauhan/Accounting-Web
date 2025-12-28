@@ -49,19 +49,28 @@ export default function SaleEntry() {
   /* ---------------- LEDGER LOGIC ---------------- */
 
   const updateLedger = (i, field, value) => {
-    const rows = [...ledgers];
+  const rows = [...ledgers];
 
-    if (field === "rate" && (value === "" || Number(value) < 0)) return;
+  if (field === "rate" && Number(value) < 0) return;
 
-    rows[i][field] = value;
-    rows[i].amount = (subTotal * Number(rows[i].rate || 0)) / 100;
+  rows[i][field] = value;
 
-    if (rows[i].name && rows[i].rate && i === rows.length - 1) {
-      rows.push({ name: "", rate: "", amount: 0 });
-    }
+  const rate = Number(rows[i].rate);
 
-    setLedgers(rows.filter((r, idx) => r.name || idx === rows.length - 1));
-  };
+  if (rate > 0) {
+    rows[i].amount = (subTotal * rate) / 100;
+  } else {
+    rows[i].amount = 0;
+  }
+
+  if (rows[i].name && rate > 0 && i === rows.length - 1) {
+    rows.push({ name: "", rate: "", amount: 0 });
+  }
+
+  setLedgers(
+    rows.filter((r, idx) => r.name || idx === rows.length - 1)
+  );
+};
 
   const ledgerTotal = ledgers.reduce((s, r) => s + r.amount, 0);
   const grandTotal = subTotal + ledgerTotal;
