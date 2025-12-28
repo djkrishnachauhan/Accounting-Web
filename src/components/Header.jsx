@@ -1,22 +1,20 @@
-import { Menu } from "lucide-react";
-
-export default function Header({ setSidebarOpen }) {
+export default function Header() {
   return (
-    <header className="h-14 bg-gray-300 border-b flex items-center px-4 justify-between fixed top-0 left-0 right-0 z-50">
+    <div className="h-16 bg-white border-b shadow-sm flex items-center px-6 justify-between">
       
-      {/* ☰ MENU BUTTON (always visible) */}
-      <button
-        onClick={() => setSidebarOpen(prev => !prev)}
-        className="p-1"
-      >
-        <Menu size={26} />
-      </button>
+      <div className="text-lg font-semibold text-slate-700">
+        Voucher Entry
+      </div>
 
-      <h1 className="text-xl md:text-2xl font-bold tracking-wide">
-        RAJASTHAN TOOLS
-      </h1>
+      <div className="flex items-center gap-4">
+        <div className="text-sm text-slate-600">
+          Admin
+        </div>
+        <div className="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center">
+          A
+        </div>
+      </div>
 
-      <div className="w-8 h-8 rounded-full border-2 border-black" />
-    </header>
+    </div>
   );
 }
