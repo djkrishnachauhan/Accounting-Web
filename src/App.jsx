@@ -5,31 +5,27 @@ import Dashboard from "./components/Dashboard";
 
 export default function App() {
   const [active, setActive] = useState("home");
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
 
   return (
-    <div className="flex h-screen w-screen bg-slate-100 overflow-hidden relative">
+    <div className="h-screen flex flex-col">
 
-      {/* Overlay (mobile only) */}
-      {sidebarOpen && (
-        <div
-          className="fixed inset-0 bg-black/40 z-40 md:hidden"
-          onClick={() => setSidebarOpen(false)}
-        />
-      )}
+      {/* HEADER */}
+      <Header setSidebarOpen={setSidebarOpen} />
 
-      <Sidebar
-        active={active}
-        setActive={setActive}
-        sidebarOpen={sidebarOpen}
-      />
+      {/* BODY */}
+      <div className="flex flex-1 overflow-hidden">
 
-      <div className="flex-1 flex flex-col">
-        <Header setSidebarOpen={setSidebarOpen} />
+        {/* SIDEBAR */}
+        {sidebarOpen && (
+          <Sidebar active={active} setActive={setActive} />
+        )}
 
-        <main className="flex-1 p-6 md:p-10 overflow-auto">
+        {/* CONTENT */}
+        <main className="flex-1 overflow-auto bg-slate-50 p-6">
           <Dashboard active={active} />
         </main>
+
       </div>
     </div>
   );
