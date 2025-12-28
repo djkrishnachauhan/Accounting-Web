@@ -1,104 +1,103 @@
-export default function SaleEntry() {
-  return (
-    <div className="max-w-6xl mx-auto bg-white p-6 rounded-lg shadow">
+import { useState } from "react";
 
-      <h2 className="text-xl font-semibold text-slate-700 mb-6">
+export default function SaleEntry() {
+
+  const [rows, setRows] = useState([
+    { item: "", qty: "", rate: "", amount: 0 }
+  ]);
+
+  const updateRow = (index, field, value) => {
+    const updated = [...rows];
+    updated[index][field] = value;
+
+    const qty = Number(updated[index].qty);
+    const rate = Number(updated[index].rate);
+
+    updated[index].amount =
+      qty > 0 && rate > 0 ? qty * rate : 0;
+
+    // AUTO ADD NEXT ROW
+    if (
+      field !== "item" &&
+      updated[index].item &&
+      updated[index].qty &&
+      updated[index].rate &&
+      index === rows.length - 1
+    ) {
+      updated.push({ item: "", qty: "", rate: "", amount: 0 });
+    }
+
+    setRows(updated.filter((r, i) =>
+      r.item || i === updated.length - 1
+    ));
+  };
+
+  const total = rows.reduce((sum, r) => sum + r.amount, 0);
+
+  return (
+    <div className="max-w-6xl mx-auto bg-white p-6 rounded shadow">
+
+      <h2 className="text-xl font-semibold mb-6 text-slate-700">
         Sales Invoice
       </h2>
 
-      {/* Header Section */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+      {/* TABLE */}
+      <table className="w-full border text-sm">
+        <thead className="bg-slate-100">
+          <tr>
+            <th className="p-2 border text-left">Item</th>
+            <th className="p-2 border text-right">Qty</th>
+            <th className="p-2 border text-right">Rate</th>
+            <th className="p-2 border text-right">Amount</th>
+          </tr>
+        </thead>
 
-        <div>
-          <label className="block text-sm font-medium text-slate-600">
-            Party Ledger
-          </label>
-          <input
-            className="mt-1 w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400"
-            placeholder="Select Party Ledger"
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-slate-600">
-            Invoice No
-          </label>
-          <input
-            className="mt-1 w-full border rounded px-3 py-2"
-            placeholder="INV-001"
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-slate-600">
-            Date
-          </label>
-          <input
-            type="date"
-            className="mt-1 w-full border rounded px-3 py-2"
-          />
-        </div>
-
-      </div>
-
-      {/* Ledger Entries */}
-      <div className="border rounded mb-6 overflow-hidden">
-
-        <table className="w-full text-sm">
-          <thead className="bg-slate-100 text-slate-600">
-            <tr>
-              <th className="p-2 text-left">Ledger Name</th>
-              <th className="p-2 text-right">Debit</th>
-              <th className="p-2 text-right">Credit</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            <tr className="border-t">
-              <td className="p-2">
+        <tbody>
+          {rows.map((row, i) => (
+            <tr key={i}>
+              <td className="border p-1">
                 <input
-                  className="w-full border rounded px-2 py-1"
-                  placeholder="Sales Account"
+                  value={row.item}
+                  onChange={e => updateRow(i, "item", e.target.value)}
+                  className="w-full px-2 py-1 border rounded"
+                  placeholder="Item name"
                 />
               </td>
-              <td className="p-2 text-right">
+
+              <td className="border p-1">
                 <input
-                  className="w-full border rounded px-2 py-1 text-right"
-                  placeholder="0.00"
+                  value={row.qty}
+                  onChange={e => updateRow(i, "qty", e.target.value)}
+                  className="w-full px-2 py-1 border rounded text-right"
                 />
               </td>
-              <td className="p-2 text-right">
+
+              <td className="border p-1">
                 <input
-                  className="w-full border rounded px-2 py-1 text-right"
-                  placeholder="0.00"
+                  value={row.rate}
+                  onChange={e => updateRow(i, "rate", e.target.value)}
+                  className="w-full px-2 py-1 border rounded text-right"
                 />
+              </td>
+
+              <td className="border p-1 text-right">
+                {row.amount.toFixed(2)}
               </td>
             </tr>
-          </tbody>
-        </table>
+          ))}
+        </tbody>
 
-      </div>
-
-      {/* Narration */}
-      <div className="mb-6">
-        <label className="block text-sm font-medium text-slate-600">
-          Narration
-        </label>
-        <textarea
-          className="mt-1 w-full border rounded px-3 py-2"
-          rows="3"
-        />
-      </div>
-
-      {/* Actions */}
-      <div className="flex justify-end gap-4">
-        <button className="px-6 py-2 rounded border">
-          Cancel
-        </button>
-        <button className="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
-          Save
-        </button>
-      </div>
+        <tfoot>
+          <tr className="bg-slate-100 font-semibold">
+            <td colSpan="3" className="p-2 text-right border">
+              Total
+            </td>
+            <td className="p-2 text-right border">
+              {total.toFixed(2)}
+            </td>
+          </tr>
+        </tfoot>
+      </table>
 
     </div>
   );
