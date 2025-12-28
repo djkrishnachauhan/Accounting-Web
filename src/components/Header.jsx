@@ -2,17 +2,17 @@ import { Menu } from "lucide-react";
 
 export default function Header({ setSidebarOpen }) {
   return (
-    <header className="h-14 bg-gray-300 border-b flex items-center px-4 justify-between">
+    <header className="h-14 bg-gray-300 border-b flex items-center px-4 justify-between fixed top-0 left-0 right-0 z-50">
       
-      {/* ☰ MENU BUTTON */}
+      {/* ☰ MENU BUTTON (always visible) */}
       <button
-        className="md:hidden"
         onClick={() => setSidebarOpen(prev => !prev)}
+        className="p-1"
       >
-        <Menu size={28} />
+        <Menu size={26} />
       </button>
 
-      <h1 className="text-2xl font-bold tracking-wide">
+      <h1 className="text-xl md:text-2xl font-bold tracking-wide">
         RAJASTHAN TOOLS
       </h1>
 
