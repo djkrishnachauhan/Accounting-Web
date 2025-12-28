@@ -8,7 +8,16 @@ export default function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="flex h-screen w-screen bg-slate-100 overflow-hidden">
+    <div className="flex h-screen w-screen bg-slate-100 overflow-hidden relative">
+
+      {/* Overlay (mobile only) */}
+      {sidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black/40 z-40 md:hidden"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
       <Sidebar
         active={active}
         setActive={setActive}
@@ -17,6 +26,7 @@ export default function App() {
 
       <div className="flex-1 flex flex-col">
         <Header setSidebarOpen={setSidebarOpen} />
+
         <main className="flex-1 p-6 md:p-10 overflow-auto">
           <Dashboard active={active} />
         </main>
