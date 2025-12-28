@@ -1,4 +1,4 @@
-export default function VoucherDashboard() {
+export default function VoucherDashboard({ onSelect }) {
   return (
     <div className="max-w-5xl mx-auto">
 
@@ -9,22 +9,20 @@ export default function VoucherDashboard() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
         <VoucherCard title="Purchase" />
-        <VoucherCard title="Sale" />
+        <VoucherCard title="Sale" onClick={() => onSelect("sale")} />
         <VoucherCard title="Receipt" />
         <VoucherCard title="Payment" />
-
-        <div className="md:col-span-2">
-          <VoucherCard title="Journal" />
-        </div>
+        <VoucherCard title="Journal" />
 
       </div>
     </div>
   );
 }
 
-function VoucherCard({ title }) {
+function VoucherCard({ title, onClick }) {
   return (
     <button
+      onClick={onClick}
       className="h-24 bg-white border border-slate-300 rounded-lg
       flex items-center justify-center
       text-lg font-medium text-slate-700
