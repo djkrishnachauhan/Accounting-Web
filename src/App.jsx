@@ -1,31 +1,26 @@
 import { useState } from "react";
 import Sidebar from "./components/Sidebar";
 import Header from "./components/Header";
-import Dashboard from "./components/Dashboard";
+import VoucherDashboard from "./components/VoucherDashboard";
+import SaleEntry from "./components/SaleEntry";
 
 export default function App() {
-  const [active, setActive] = useState("home");
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [activeScreen, setActiveScreen] = useState("dashboard");
 
   return (
-    <div className="h-screen flex flex-col">
+    <div className="flex h-screen bg-slate-100">
+      <Sidebar onNavigate={setActiveScreen} />
 
-      {/* HEADER */}
-      <Header setSidebarOpen={setSidebarOpen} />
+      <div className="flex-1 flex flex-col">
+        <Header />
 
-      {/* BODY */}
-      <div className="flex flex-1 overflow-hidden">
+        <main className="flex-1 overflow-auto p-4">
+          {activeScreen === "dashboard" && (
+            <VoucherDashboard onSale={() => setActiveScreen("sale")} />
+          )}
 
-        {/* SIDEBAR */}
-        {sidebarOpen && (
-          <Sidebar active={active} setActive={setActive} />
-        )}
-
-        {/* CONTENT */}
-        <main className="flex-1 overflow-auto bg-slate-50 p-6">
-          <Dashboard active={active} setActive={setActive} />
+          {activeScreen === "sale" && <SaleEntry />}
         </main>
-
       </div>
     </div>
   );
