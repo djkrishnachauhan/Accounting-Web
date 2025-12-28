@@ -1,7 +1,15 @@
+import VoucherDashboard from "./VoucherDashboard";
+
 export default function Dashboard({ active }) {
+  if (active === "vouchers") {
+    return <VoucherDashboard />;
+  }
+
   return (
-    <div className="h-full flex items-center justify-center text-xl font-semibold text-slate-500">
-      {active.toUpperCase()} CONTENT WILL SHOW HERE
+    <div className="text-xl font-semibold">
+      {active === "home" && "Welcome"}
+      {active === "reports" && "Reports Page"}
+      {active === "daybook" && "Day Book Page"}
     </div>
   );
 }
